@@ -14,15 +14,25 @@ public:
 
     QString source() const;
 
+    Q_INVOKABLE void initSpellPath(QPointF point);
+    Q_INVOKABLE void updateSpellPath(QPointF point);
+    Q_INVOKABLE void finalizeSpellPath();
+
 public slots:
     void setSource(QString source);
 
 private:
     bool LoadSource(const QString& path);
+    qint32 ColorCount(QColor oColor);
+    void DrawPath(QImage &image, QPointF p0, QPointF p1, QColor color);
+    void AddImageBackground(QImage* image, QColor oColor = Qt::white);
 
     QImage m_spellTemplate;
     QImage m_spellDrawing;
     QString m_source;
+
+    qint32 m_nTotal = 0;
+    QList<QPointF> m_arrPoints;
 
 signals:
     void sourceChanged(QString source);

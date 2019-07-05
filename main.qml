@@ -17,20 +17,21 @@ Window {
         mouseEnabled: true  // debug
 
         onPressed: {
-            console.log(point1.x, point1.y)
-        }
-        onReleased: {
-            console.log(point1.x, point1.y)
+            spellCast.initSpellPath(Qt.point(point1.x, point1.y))
         }
         onUpdated: {
-            console.log(point1.x, point1.y)
+            spellCast.updateSpellPath(Qt.point(point1.x, point1.y))
+        }
+        onReleased: {
+            spellCast.finalizeSpellPath()
         }
         onCanceled: {
-            //
+            spellCast.finalizeSpellPath()
         }
     }
 
     SpellCast {
+        id: spellCast
         anchors.fill: parent
 
         source: "qrc:/spells/spell0_ready.svg"
