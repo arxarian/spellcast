@@ -3,12 +3,15 @@
 SpellCast::SpellCast(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     setAntialiasing(true);
+
+    connect(this, &QQuickPaintedItem::heightChanged, this, &SpellCast::resizeImage);
+    connect(this, &QQuickPaintedItem::widthChanged, this, &SpellCast::resizeImage);
 }
 
 void SpellCast::paint(QPainter *painter)
 {
-    const QRect rect(0, 0, static_cast<int>(width()), static_cast<int>(height()));
-    painter->drawImage(QPoint(0, 0), m_spellDrawing);
+    const QRect targetRect(0, 0, static_cast<int>(width()), static_cast<int>(height()));
+    painter->drawImage(0, 0, m_spellDrawing);
 }
 
 QString SpellCast::source() const
@@ -54,18 +57,27 @@ void SpellCast::setSource(QString source)
     emit sourceChanged(m_source);
 }
 
-bool SpellCast::LoadSource(const QString &path)
+void SpellCast::resizeImage()
 {
-    QImage loadedImage;
-    if (!loadedImage.load(path))
-        return false;
+    if (m_loadedImage.isNull()) return;
 
-    qDebug() << "size" << loadedImage.size();
-    AddImageBackground(&loadedImage);
-    m_spellTemplate = loadedImage;
-    m_spellDrawing = loadedImage;
+    AddImageBackground(&m_loadedImage);
+
+    qint32 nWidth = static_cast<qint32>(width());
+    qint32 nHeight = static_cast<qint32>(height());
+
+    m_spellTemplate =  m_loadedImage.copy(0, 0, nWidth, nHeight);
+    m_spellDrawing =  m_loadedImage.copy(0, 0, nWidth, nHeight);
 
     update();
+}
+
+bool SpellCast::LoadSource(const QString &path)
+{
+    if (!m_loadedImage.load(path))
+        return false;
+
+    resizeImage();
 
     return true;
 }

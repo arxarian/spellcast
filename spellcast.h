@@ -20,6 +20,7 @@ public:
 
 public slots:
     void setSource(QString source);
+    void resizeImage();
 
 private:
     bool LoadSource(const QString& path);
@@ -29,6 +30,7 @@ private:
 
     QImage m_spellTemplate;
     QImage m_spellDrawing;
+    QImage m_loadedImage;
     QString m_source;
 
     qint32 m_nTotal = 0;

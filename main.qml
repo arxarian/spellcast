@@ -8,32 +8,40 @@ Window {
     width: 640
     height: 480
 
-    MultiPointTouchArea {
-        anchors.fill: parent
-
-        touchPoints: [ TouchPoint { id: point1 } ]
-
-        maximumTouchPoints: 1
-        mouseEnabled: true  // debug
-
-        onPressed: {
-            spellCast.initSpellPath(Qt.point(point1.x, point1.y))
-        }
-        onUpdated: {
-            spellCast.updateSpellPath(Qt.point(point1.x, point1.y))
-        }
-        onReleased: {
-            spellCast.finalizeSpellPath()
-        }
-        onCanceled: {
-            spellCast.finalizeSpellPath()
-        }
-    }
+    color: "black"
 
     SpellCast {
         id: spellCast
-        anchors.fill: parent
+
+        property int size: Math.min(parent.height, parent.width)
+
+        anchors.centerIn: parent
+
+        height: size
+        width: size
 
         source: "qrc:/spells/spell0_ready.svg"
+
+        MultiPointTouchArea {
+            anchors.fill: parent
+
+            touchPoints: [ TouchPoint { id: point1 } ]
+
+            maximumTouchPoints: 1
+            mouseEnabled: true  // debug
+
+            onPressed: {
+                spellCast.initSpellPath(Qt.point(point1.x, point1.y))
+            }
+            onUpdated: {
+                spellCast.updateSpellPath(Qt.point(point1.x, point1.y))
+            }
+            onReleased: {
+                spellCast.finalizeSpellPath()
+            }
+            onCanceled: {
+                spellCast.finalizeSpellPath()
+            }
+        }
     }
 }
