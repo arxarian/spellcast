@@ -12,10 +12,15 @@ Window {
 
     Timer {
         id: timer
+
+        property int spellIndex: 0
+
         interval: 3000
         onTriggered: {
             text.visible = false
-            spellCast.reset()
+            spellCast.source = "qrc:/spells/spell" + spellIndex + "_ready.svg"
+
+            spellIndex = (spellIndex + 1) % 2
         }
     }
 
