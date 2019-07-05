@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>spells/spell0_ready.svg</file>
+    </qresource>
+</RCC>
