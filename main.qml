@@ -8,7 +8,7 @@ Window {
     width: 640
     height: 480
 
-    color: "black"
+    color: "gold"
 
     SpellCast {
         id: spellCast

@@ -11,7 +11,7 @@ SpellCast::SpellCast(QQuickItem *parent) : QQuickPaintedItem(parent)
 void SpellCast::paint(QPainter *painter)
 {
     const QRect targetRect(0, 0, static_cast<int>(width()), static_cast<int>(height()));
-    painter->drawImage(0, 0, m_spellDrawing);
+    painter->drawImage(targetRect, m_spellDrawing);
 }
 
 QString SpellCast::source() const
@@ -21,6 +21,7 @@ QString SpellCast::source() const
 
 void SpellCast::initSpellPath(QPointF point)
 {
+    point *= m_ratio;
     m_arrPoints.clear();
     m_arrPoints.append(point);
 
@@ -29,6 +30,7 @@ void SpellCast::initSpellPath(QPointF point)
 
 void SpellCast::updateSpellPath(QPointF point)
 {
+    point *= m_ratio;
     const QPointF previousPoint = m_arrPoints.last();
     m_arrPoints.append(point);
 
@@ -63,11 +65,15 @@ void SpellCast::resizeImage()
 
     AddImageBackground(&m_loadedImage);
 
-    qint32 nWidth = static_cast<qint32>(width());
-    qint32 nHeight = static_cast<qint32>(height());
+    m_spellTemplate =  m_loadedImage;
+    m_spellDrawing =  m_loadedImage;
 
-    m_spellTemplate =  m_loadedImage.copy(0, 0, nWidth, nHeight);
-    m_spellDrawing =  m_loadedImage.copy(0, 0, nWidth, nHeight);
+    m_ratio = m_loadedImage.width() / width();
+
+    if (qFuzzyCompare(m_ratio, (m_loadedImage.height() / height())) == false)
+    {
+        qInfo() << "image is not a square";
+    }
 
     update();
 }

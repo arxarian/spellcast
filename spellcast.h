@@ -36,6 +36,8 @@ private:
     qint32 m_nTotal = 0;
     QList<QPointF> m_arrPoints;
 
+    qreal m_ratio = 0;
+
 signals:
     void sourceChanged(QString source);
 };
