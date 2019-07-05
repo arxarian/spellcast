@@ -19,6 +19,16 @@ QString SpellCast::source() const
     return m_source;
 }
 
+QTime SpellCast::time() const
+{
+    return m_time;
+}
+
+qreal SpellCast::completed() const
+{
+    return m_completed;
+}
+
 void SpellCast::initSpellPath(QPointF point)
 {
     point *= m_ratio;
@@ -42,7 +52,9 @@ void SpellCast::updateSpellPath(QPointF point)
 
 void SpellCast::finalizeSpellPath()
 {
-    qInfo() << "cover" << (1 - ColorCount(Qt::white) / static_cast<qreal>(m_nTotal));
+    m_completed = (1 - ColorCount(Qt::white) / static_cast<qreal>(m_nTotal));
+
+    emit completedChanged(m_completed);
 }
 
 void SpellCast::setSource(QString source)

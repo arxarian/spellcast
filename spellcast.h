@@ -6,6 +6,8 @@
 class SpellCast : public QQuickPaintedItem
 {
     Q_OBJECT
+    Q_PROPERTY(QTime time READ time NOTIFY timeChanged)
+    Q_PROPERTY(qreal completed READ completed NOTIFY completedChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
 
 public:
@@ -13,6 +15,8 @@ public:
     void paint(QPainter *painter) override;
 
     QString source() const;
+    QTime time() const;
+    qreal completed() const;
 
     Q_INVOKABLE void initSpellPath(QPointF point);
     Q_INVOKABLE void updateSpellPath(QPointF point);
@@ -38,8 +42,13 @@ private:
 
     qreal m_ratio = 0;
 
+    QTime m_time;
+    qreal m_completed;
+
 signals:
     void sourceChanged(QString source);
+    void completedChanged(qreal completed);
+    void timeChanged(QTime time);
 };
 
 #endif // SPELLCAST_H

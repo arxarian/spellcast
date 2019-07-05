@@ -22,6 +22,18 @@ Window {
 
         source: "qrc:/spells/spell0_ready.svg"
 
+        onCompletedChanged: {
+            text.text = "accuracy " + Math.round(completed * 100) + " %"
+            text.visible = true
+        }
+
+        Text {
+            id: text
+            anchors.centerIn: parent
+            font.pixelSize: spellCast.size / 15
+            visible: false
+        }
+
         MultiPointTouchArea {
             anchors.fill: parent
 
