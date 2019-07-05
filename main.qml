@@ -32,7 +32,8 @@ Window {
         source: "qrc:/spells/spell0_ready.svg"
 
         onCompletedChanged: {
-            text.text = "accuracy " + Math.round(completed * 100) + " %"
+            text.text = "accuracy " + Math.round(completed * 100) + " %\n"
+                        + "time " + time + " ms"
             text.visible = true
         }
 

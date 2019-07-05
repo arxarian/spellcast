@@ -19,9 +19,9 @@ QString SpellCast::source() const
     return m_source;
 }
 
-QTime SpellCast::time() const
+qint32 SpellCast::time() const
 {
-    return m_time;
+    return m_time_ms;
 }
 
 qreal SpellCast::completed() const
@@ -36,6 +36,8 @@ void SpellCast::initSpellPath(QPointF point)
     m_arrPoints.append(point);
 
     m_nTotal = ColorCount(Qt::white);
+
+    m_timer.start();
 }
 
 void SpellCast::updateSpellPath(QPointF point)
@@ -54,6 +56,9 @@ void SpellCast::finalizeSpellPath()
 {
     m_completed = (1 - ColorCount(Qt::white) / static_cast<qreal>(m_nTotal));
 
+    m_time_ms = static_cast<qint32>(m_timer.elapsed());
+
+    emit timeChanged(m_time_ms);
     emit completedChanged(m_completed);
 }
 
