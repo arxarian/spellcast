@@ -22,6 +22,8 @@ public:
     Q_INVOKABLE void updateSpellPath(QPointF point);
     Q_INVOKABLE void finalizeSpellPath();
 
+    Q_INVOKABLE void reset();
+
 public slots:
     void setSource(QString source);
     void resizeImage();

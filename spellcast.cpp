@@ -57,6 +57,11 @@ void SpellCast::finalizeSpellPath()
     emit completedChanged(m_completed);
 }
 
+void SpellCast::reset()
+{
+    LoadSource(QQmlFile::urlToLocalFileOrQrc(m_source));
+}
+
 void SpellCast::setSource(QString source)
 {
     if (m_source == source)

@@ -10,6 +10,15 @@ Window {
 
     color: "gold"
 
+    Timer {
+        id: timer
+        interval: 3000
+        onTriggered: {
+            text.visible = false
+            spellCast.reset()
+        }
+    }
+
     SpellCast {
         id: spellCast
 
@@ -42,6 +51,7 @@ Window {
             maximumTouchPoints: 1
             mouseEnabled: true  // debug
 
+
             onPressed: {
                 spellCast.initSpellPath(Qt.point(point1.x, point1.y))
             }
@@ -50,6 +60,7 @@ Window {
             }
             onReleased: {
                 spellCast.finalizeSpellPath()
+                timer.restart()
             }
             onCanceled: {
                 spellCast.finalizeSpellPath()
