@@ -13,7 +13,7 @@ Window {
 
     Timer {
         id: timer
-        interval: 2000
+        interval: 3000
         onTriggered: {
             text.visible = false
             spellCast.reset()
@@ -30,7 +30,7 @@ Window {
         height: size
         width: size
 
-        source: "qrc:/spells/spell1_ready.svg"
+        source: "qrc:/spells/spell0_ready.svg"
 
         onCompletedChanged: {
             text.text = "accuracy " + Math.round(completed * 100) + " %\n"
@@ -65,9 +65,9 @@ Window {
                 system: sys
                 enabled: false
                 emitRate: 2000
-                lifeSpan: 2000
-                acceleration: AngleDirection {angleVariation: 360; magnitude: 10; }
-                size: 20
+                lifeSpan: 2500
+                acceleration: AngleDirection {angleVariation: 360; magnitude: 1; }
+                size: 30
                 endSize: 0
                 sizeVariation: 4
             }
