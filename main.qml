@@ -32,8 +32,14 @@ Window {
         source: "qrc:/spells/spell0_ready.svg"
 
         onSpellStatsChanged: {
-            text.text = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
+            var spellSummary = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
                         + "time " + spellCast.spellStats.time + " ms"
+
+            if (spellCast.spellStats.penalty > 0) {
+                spellSummary += "\npenalty " + Math.round(spellCast.spellStats.penalty * 10) + " %"
+            }
+
+            text.text = spellSummary
             text.visible = true
         }
 

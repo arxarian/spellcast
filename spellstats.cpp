@@ -31,8 +31,6 @@ void SpellStats::reset(qreal spellTempleteLength)
     m_penalty = 0;
 
     m_timer.start();
-
-    qDebug() << m_spellTemplateLength;
 }
 
 void SpellStats::complete(qreal spellTempleteLength)
@@ -40,7 +38,8 @@ void SpellStats::complete(qreal spellTempleteLength)
     m_covered = (1 - spellTempleteLength/ m_spellTemplateLength);
     m_time_ms = static_cast<qint32>(m_timer.elapsed());
 
-    qDebug() << spellTempleteLength << m_spellDrawingLength;
+    qreal penalty = m_spellDrawingLength / m_spellTemplateLength - 1.0;
+    m_penalty = qMin(qMax(0.0, penalty * 5), 10.0);
 }
 
 void SpellStats::addSpellDrawingLength(qreal spellDrawingLength)
