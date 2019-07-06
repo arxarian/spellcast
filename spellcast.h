@@ -6,6 +6,7 @@
 struct SpellParameters
 {
     QPen m_pen;
+    QColor m_backgroundColor;
 };
 
 class SpellCast : public QQuickPaintedItem
@@ -21,7 +22,7 @@ public:
 
     enum SpellType
     {
-        Template, Decorative, User
+        Template, Decorative, Drawing
     };
 
     QString source() const;

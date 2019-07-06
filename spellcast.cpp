@@ -5,8 +5,12 @@ SpellCast::SpellCast(QQuickItem *parent) : QQuickPaintedItem(parent)
     setAntialiasing(true);
 
     m_spellParameters[Template].m_pen = QPen(QColor(Qt::white), 30);
+    m_spellParameters[Template].m_backgroundColor = QColor(Qt::white);
+
     m_spellParameters[Decorative].m_pen = QPen(QColor(50, 50, 50, 5), 12);
-    m_spellParameters[User].m_pen = QPen(QColor(255, 0, 0, 100), 12, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+    m_spellParameters[Drawing].m_pen = QPen(QColor(255, 255, 255, 200), 12, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    m_spellParameters[Drawing].m_backgroundColor = QColor(Qt::lightGray);
 
     connect(this, &QQuickPaintedItem::heightChanged, this, &SpellCast::resizeImage);
     connect(this, &QQuickPaintedItem::widthChanged, this, &SpellCast::resizeImage);
@@ -89,10 +93,13 @@ void SpellCast::resizeImage()
 {
     if (m_loadedImage.isNull()) return;
 
-    AddImageBackground(&m_loadedImage);
+    QImage spellTemplate = m_loadedImage;
+    QImage spellDrawing = m_loadedImage;
+    AddImageBackground(&spellTemplate, m_spellParameters[Template].m_backgroundColor);
+    AddImageBackground(&spellDrawing, m_spellParameters[Drawing].m_backgroundColor);
 
-    m_spellTemplate =  m_loadedImage;
-    m_spellDrawing =  m_loadedImage;
+    m_spellTemplate = spellTemplate;
+    m_spellDrawing = spellDrawing;
 
     m_ratio = m_loadedImage.width() / width();
 
