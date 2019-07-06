@@ -19,9 +19,9 @@ Window {
         interval: 3000
         onTriggered: {
             text.visible = false
-            spellCast.source = "qrc:/spells/spell" + spellIndex + "_ready.svg"
+            spellIndex = (spellIndex + 1) % 3
 
-            spellIndex = (spellIndex + 1) % 2
+            spellCast.source = "qrc:/spells/spell" + spellIndex + "_ready.svg"
         }
     }
 
