@@ -54,7 +54,7 @@ private:
     QImage m_loadedImage;
     QString m_source;
 
-    QList<QPointF> m_arrPoints;
+    QList<QPointF> m_arrSpellPath;
 
     qreal m_ratio = 0;
 

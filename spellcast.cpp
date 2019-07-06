@@ -30,8 +30,8 @@ QString SpellCast::source() const
 void SpellCast::initSpellPath(QPointF point)
 {
     point *= m_ratio;
-    m_arrPoints.clear();
-    m_arrPoints.append(point);
+    m_arrSpellPath.clear();
+    m_arrSpellPath.append(point);
 
     m_spellStats.reset(ColorCount(Qt::white));
 }
@@ -39,8 +39,8 @@ void SpellCast::initSpellPath(QPointF point)
 void SpellCast::updateSpellPath(QPointF point)
 {
     point *= m_ratio;
-    const QPointF previousPoint = m_arrPoints.last();
-    m_arrPoints.append(point);
+    const QPointF previousPoint = m_arrSpellPath.last();
+    m_arrSpellPath.append(point);
 
     const qreal spellLength = sqrt(pow(point.x() - previousPoint.x(), 2) + pow(point.y() - previousPoint.y(), 2));
     m_spellStats.addSpellDrawingLength(spellLength);
