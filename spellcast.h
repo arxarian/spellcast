@@ -3,6 +3,8 @@
 
 #include <QtQuick>
 
+#include "spellstats.h"
+
 struct SpellParameters
 {
     QPen m_pen;
@@ -12,9 +14,8 @@ struct SpellParameters
 class SpellCast : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(qint32 time READ time NOTIFY timeChanged)
-    Q_PROPERTY(qreal completed READ completed NOTIFY completedChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(SpellStats* spellStats READ spellStats NOTIFY spellStatsChanged)
 
 public:
     explicit SpellCast(QQuickItem *parent = nullptr);
@@ -26,14 +27,14 @@ public:
     };
 
     QString source() const;
-    qint32 time() const;
-    qreal completed() const;
+    SpellStats* spellStats();
 
     Q_INVOKABLE void initSpellPath(QPointF point);
     Q_INVOKABLE void updateSpellPath(QPointF point);
     Q_INVOKABLE void finalizeSpellPath();
 
     Q_INVOKABLE void reset();
+
 
 public slots:
     void setSource(QString source);
@@ -53,19 +54,15 @@ private:
     QImage m_loadedImage;
     QString m_source;
 
-    qint32 m_nTotal = 0;
     QList<QPointF> m_arrPoints;
 
     qreal m_ratio = 0;
 
-    qint32 m_time_ms;
-    QElapsedTimer m_timer;
-    qreal m_completed;
+    SpellStats m_spellStats;
 
 signals:
     void sourceChanged(QString source);
-    void completedChanged(qreal completed);
-    void timeChanged(qint32 time);
+    void spellStatsChanged();
 };
 
 #endif // SPELLCAST_H

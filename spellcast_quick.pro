@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        spellcast.cpp
+        spellcast.cpp \
+        spellstats.cpp
 
 RESOURCES += qml.qrc \
     resources.qrc
@@ -31,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    spellcast.h
+    spellcast.h \
+    spellstats.h

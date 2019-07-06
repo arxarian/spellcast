@@ -31,9 +31,9 @@ Window {
 
         source: "qrc:/spells/spell0_ready.svg"
 
-        onCompletedChanged: {
-            text.text = "accuracy " + Math.round(completed * 100) + " %\n"
-                        + "time " + time + " ms"
+        onSpellStatsChanged: {
+            text.text = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
+                        + "time " + spellCast.spellStats.time + " ms"
             text.visible = true
         }
 

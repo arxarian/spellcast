@@ -27,25 +27,13 @@ QString SpellCast::source() const
     return m_source;
 }
 
-qint32 SpellCast::time() const
-{
-    return m_time_ms;
-}
-
-qreal SpellCast::completed() const
-{
-    return m_completed;
-}
-
 void SpellCast::initSpellPath(QPointF point)
 {
     point *= m_ratio;
     m_arrPoints.clear();
     m_arrPoints.append(point);
 
-    m_nTotal = ColorCount(Qt::white);
-
-    m_timer.start();
+    m_spellStats.reset(ColorCount(Qt::white));
 }
 
 void SpellCast::updateSpellPath(QPointF point)
@@ -54,25 +42,30 @@ void SpellCast::updateSpellPath(QPointF point)
     const QPointF previousPoint = m_arrPoints.last();
     m_arrPoints.append(point);
 
+    const qreal spellLength = sqrt(pow(point.x() - previousPoint.x(), 2) + pow(point.y() - previousPoint.y(), 2));
+    m_spellStats.addSpellDrawingLength(spellLength);
+
     DrawPath(m_spellTemplate, previousPoint, point, m_spellParameters[Template]);
-    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[User]);
+    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[Drawing]);
 
     emit update();
 }
 
 void SpellCast::finalizeSpellPath()
 {
-    m_completed = (1 - ColorCount(Qt::white) / static_cast<qreal>(m_nTotal));
+    m_spellStats.complete(ColorCount(Qt::white));
 
-    m_time_ms = static_cast<qint32>(m_timer.elapsed());
-
-    emit timeChanged(m_time_ms);
-    emit completedChanged(m_completed);
+    emit spellStatsChanged();
 }
 
 void SpellCast::reset()
 {
     LoadSource(QQmlFile::urlToLocalFileOrQrc(m_source));
+}
+
+SpellStats *SpellCast::spellStats()
+{
+    return &m_spellStats;
 }
 
 void SpellCast::setSource(QString source)
