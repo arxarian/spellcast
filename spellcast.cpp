@@ -55,7 +55,7 @@ void SpellCast::updateSpellPath(QPointF point)
     m_arrPoints.append(point);
 
     DrawPath(m_spellTemplate, previousPoint, point, m_spellParameters[Template]);
-    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[User]);
+//    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[Drawing]);
 
     emit update();
 }
