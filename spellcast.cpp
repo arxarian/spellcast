@@ -96,7 +96,7 @@ void SpellCast::resizeImage()
 
     m_ratio = m_loadedImage.width() / width();
 
-    if (qFuzzyCompare(m_ratio, (m_loadedImage.height() / height())) == false)
+    if (height() > 0 && width() > 0 && qFuzzyCompare(m_ratio, (m_loadedImage.height() / height())) == false)
     {
         qInfo() << "image is not a square";
     }
