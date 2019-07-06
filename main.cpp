@@ -2,9 +2,11 @@
 #include <QQmlApplicationEngine>
 
 #include "spellcast.h"
+#include "spellstats.h"
 
 int main(int argc, char *argv[])
 {
+    qmlRegisterType<SpellStats>();
     qmlRegisterType<SpellCast>("SpellCast", 1, 0, "SpellCast");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
