@@ -6,5 +6,6 @@
         <file>spells/spell3_ready.svg</file>
         <file>spells/spell4_ready.svg</file>
         <file>spells/spell5_ready.svg</file>
+        <file>logo/logo.svg</file>
     </qresource>
 </RCC>
