@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
+import QtQuick.Particles 2.0
 
 import SpellCast 1.0
 
@@ -45,9 +46,37 @@ Window {
 
         Text {
             id: text
+            z: 1
             anchors.centerIn: parent
             font.pixelSize: spellCast.size / 15
             visible: false
+        }
+
+        ParticleSystem {
+            id: sys
+            anchors.fill: parent
+            onEmptyChanged: if (empty) sys.pause();
+
+            ImageParticle {
+                system: sys
+                id: cp
+                source: "qrc:///particleresources/glowdot.png"
+                colorVariation: 0.4
+                color: "#000000FF"
+            }
+
+            Emitter {
+                //burst on click
+                id: bursty
+                system: sys
+                enabled: false
+                emitRate: 2000
+                lifeSpan: 2500
+                acceleration: AngleDirection {angleVariation: 360; magnitude: 1; }
+                size: 30
+                endSize: 0
+                sizeVariation: 4
+            }
         }
 
         MultiPointTouchArea {
@@ -61,12 +90,19 @@ Window {
 
             onPressed: {
                 spellCast.initSpellPath(Qt.point(point1.x, point1.y))
+                bursty.x = point1.x
+                bursty.y = point1.y
+                sys.resume()
+                bursty.enabled = true
             }
             onUpdated: {
                 spellCast.updateSpellPath(Qt.point(point1.x, point1.y))
+                bursty.x = point1.x
+                bursty.y = point1.y
             }
             onReleased: {
                 spellCast.finalizeSpellPath()
+                bursty.enabled = false
                 timer.restart()
             }
             onCanceled: {
