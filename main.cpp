@@ -3,11 +3,13 @@
 
 #include "spellcast.h"
 #include "spellstats.h"
+#include "spellprovider.h"
 
 int main(int argc, char *argv[])
 {
     qmlRegisterType<SpellStats>();
     qmlRegisterType<SpellCast>("SpellCast", 1, 0, "SpellCast");
+    qmlRegisterType<SpellProvider>("SpellCast", 1, 0, "SpellProvider");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

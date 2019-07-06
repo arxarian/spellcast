@@ -14,15 +14,15 @@ Window {
     Timer {
         id: timer
 
-        property int spellIndex: 0
-
         interval: 3000
         onTriggered: {
             text.visible = false
-            spellIndex = (spellIndex + 1) % 3
-
-            spellCast.source = "qrc:/spells/spell" + spellIndex + "_ready.svg"
+            spellProvider.nextSpell()
         }
+    }
+
+    SpellProvider {
+        id: spellProvider
     }
 
     SpellCast {
@@ -35,7 +35,7 @@ Window {
         height: size
         width: size
 
-        source: "qrc:/spells/spell0_ready.svg"
+        source: spellProvider.spellSource
 
         onSpellStatsChanged: {
             var spellSummary = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
