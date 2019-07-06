@@ -3,5 +3,8 @@
         <file>spells/spell0_ready.svg</file>
         <file>spells/spell1_ready.svg</file>
         <file>spells/spell2_ready.svg</file>
+        <file>spells/spell3_ready.svg</file>
+        <file>spells/spell4_ready.svg</file>
+        <file>spells/spell5_ready.svg</file>
     </qresource>
 </RCC>
