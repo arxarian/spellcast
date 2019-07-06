@@ -3,6 +3,11 @@
 
 #include <QtQuick>
 
+struct SpellParameters
+{
+    QPen m_pen;
+};
+
 class SpellCast : public QQuickPaintedItem
 {
     Q_OBJECT
@@ -13,6 +18,11 @@ class SpellCast : public QQuickPaintedItem
 public:
     explicit SpellCast(QQuickItem *parent = nullptr);
     void paint(QPainter *painter) override;
+
+    enum SpellType
+    {
+        Template, Decorative, User
+    };
 
     QString source() const;
     qint32 time() const;
@@ -27,12 +37,15 @@ public:
 public slots:
     void setSource(QString source);
     void resizeImage();
+    void decorateSpellPath();
 
 private:
     bool LoadSource(const QString& path);
     qint32 ColorCount(QColor oColor);
-    void DrawPath(QImage &image, QPointF p0, QPointF p1, QColor color);
+    void DrawPath(QImage &image, QPointF p0, QPointF p1, SpellParameters parameters);
     void AddImageBackground(QImage* image, QColor oColor = Qt::white);
+
+    SpellParameters m_spellParameters[3];
 
     QImage m_spellTemplate;
     QImage m_spellDrawing;

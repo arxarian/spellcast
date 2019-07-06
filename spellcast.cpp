@@ -4,6 +4,10 @@ SpellCast::SpellCast(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     setAntialiasing(true);
 
+    m_spellParameters[Template].m_pen = QPen(QColor(Qt::white), 30);
+    m_spellParameters[Decorative].m_pen = QPen(QColor(50, 50, 50, 5), 12);
+    m_spellParameters[User].m_pen = QPen(QColor(255, 0, 0, 100), 12, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
     connect(this, &QQuickPaintedItem::heightChanged, this, &SpellCast::resizeImage);
     connect(this, &QQuickPaintedItem::widthChanged, this, &SpellCast::resizeImage);
 }
@@ -46,8 +50,8 @@ void SpellCast::updateSpellPath(QPointF point)
     const QPointF previousPoint = m_arrPoints.last();
     m_arrPoints.append(point);
 
-    DrawPath(m_spellTemplate, previousPoint, point, Qt::white);
-    DrawPath(m_spellDrawing, previousPoint, point, Qt::red);
+    DrawPath(m_spellTemplate, previousPoint, point, m_spellParameters[Template]);
+    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[User]);
 
     emit update();
 }
@@ -97,7 +101,24 @@ void SpellCast::resizeImage()
         qInfo() << "image is not a square";
     }
 
+    decorateSpellPath();
+
     update();
+}
+
+void SpellCast::decorateSpellPath()
+{
+    QPainter painter(&m_spellDrawing);
+    painter.setPen(m_spellParameters[Decorative].m_pen);
+
+    for (int y = 0; y < m_spellTemplate.height(); ++y) {
+        for (int x = 0; x < m_spellTemplate.width(); ++x) {
+            if (m_spellTemplate.pixelColor(x, y).toRgb() != Qt::white)
+            {
+                painter.drawEllipse({x, y}, 10, 10);
+            }
+        }
+    }
 }
 
 bool SpellCast::LoadSource(const QString &path)
@@ -125,10 +146,10 @@ qint32 SpellCast::ColorCount(QColor oColor)
     return nCount;
 }
 
-void SpellCast::DrawPath(QImage &image, QPointF p0, QPointF p1, QColor color)
+void SpellCast::DrawPath(QImage &image, QPointF p0, QPointF p1, SpellParameters parameters)
 {
     QPainter painter(&image);
-    painter.setPen(QPen(color, 12));
+    painter.setPen(parameters.m_pen);
 
     QPainterPath path;
     path.moveTo(p0);
@@ -139,7 +160,7 @@ void SpellCast::DrawPath(QImage &image, QPointF p0, QPointF p1, QColor color)
 
 void SpellCast::AddImageBackground(QImage *image, QColor oColor)
 {
-    QImage newImage(image->size(), QImage::Format_RGB32);
+    QImage newImage(image->size(), QImage::Format_ARGB32);
     newImage.fill(oColor);
     QPainter painter(&newImage);
 
