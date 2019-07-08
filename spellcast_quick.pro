@@ -14,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
+        socketcommunication.cpp \
         spellcast.cpp \
         spellprovider.cpp \
         spellstats.cpp
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    socketcommunication.h \
     spellcast.h \
     spellprovider.h \
     spellstats.h

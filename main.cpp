@@ -5,11 +5,14 @@
 #include "spellstats.h"
 #include "spellprovider.h"
 
+#include "socketcommunication.h"
+
 int main(int argc, char *argv[])
 {
     qmlRegisterType<SpellStats>();
     qmlRegisterType<SpellCast>("SpellCast", 1, 0, "SpellCast");
     qmlRegisterType<SpellProvider>("SpellCast", 1, 0, "SpellProvider");
+    qmlRegisterType<SocketCommunication>("SocketCommunication", 1, 0, "SocketCommunication");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
