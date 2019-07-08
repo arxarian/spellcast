@@ -77,3 +77,8 @@ void SocketCommunication::joinGame(QString userId)
 
     sendMessage(json);
 }
+
+void SocketCommunication::selectedSpells(QStringList list)
+{
+    qDebug() << list;
+}

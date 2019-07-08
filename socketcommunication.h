@@ -20,6 +20,7 @@ public:
 
     // messages
     Q_INVOKABLE void joinGame(QString userId);
+    Q_INVOKABLE void selectedSpells(QStringList list);
 
     bool connected() const;
 

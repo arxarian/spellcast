@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>SpellArea.qml</file>
         <file>SplashScreen.qml</file>
+        <file>SpellSelector.qml</file>
     </qresource>
 </RCC>

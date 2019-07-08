@@ -15,11 +15,24 @@ Window {
 
         onConnectedChanged: socket.joinGame("ar")
         onMessageReceived: {
-            console.log(message.type)
+            console.log("message received", message.type)
+            if (message.type === "prepareSpells") {
+                spellSelector.spellSelectorData = message.data
+            }
         }
 
         Component.onCompleted: {
             socket.connect("127.0.0.1", 9080)
+        }
+    }
+
+    SpellSelector {
+        id: spellSelector
+        z: 2
+        anchors.fill: parent
+
+        onConfirmed: {
+            socket.selectedSpells(selectedSpells)
         }
     }
 
