@@ -14,6 +14,9 @@ Window {
         id: socket
 
         onConnectedChanged: socket.joinGame("ar")
+        onMessageReceived: {
+            console.log(message.type)
+        }
 
         Component.onCompleted: {
             socket.connect("127.0.0.1", 9080)

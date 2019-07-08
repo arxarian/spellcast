@@ -36,8 +36,7 @@ private:
 
 signals:
     void connectedChanged();
-
-    void MessageReceived();
+    void messageReceived(QJsonObject message);
 
 };
 

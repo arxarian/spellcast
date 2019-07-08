@@ -38,8 +38,15 @@ void SocketCommunication::receiveMessage()
 {
     QByteArray arrData = socket.readAll();
 
-    QJsonDocument d = QJsonDocument::fromJson(arrData);
-    qDebug() << d;
+    QJsonParseError error;
+    QJsonDocument d = QJsonDocument::fromJson(arrData, &error);
+
+    if (d.isNull())
+    {
+        qInfo() << error.errorString() << arrData;
+    }
+
+    emit messageReceived(d.object());
 }
 
 void SocketCommunication::setState(QAbstractSocket::SocketState state)
