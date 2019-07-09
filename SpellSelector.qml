@@ -11,21 +11,17 @@ Item {
 
     function updateModel() {
         var count = internal.count
-        var names = []// = internal.names.slice()  // copy without reference (copy by value)
+        var names = []
         for (var i = 0; i < count.length; ++i) {
             if (count[i] > 0) {
                 names.push(internal.names[i])
             }
         }
 
-        console.log("names", names)
-        console.log("internal.names", internal.names)
-
         internal.displayTexts = names.slice()
 
         for (var j = 0; j < names.length; ++j) {
             var indexOfSpell = internal.names.indexOf(names[j])
-            console.log(names[j], indexOfSpell, count[indexOfSpell])
             if (indexOfSpell !== -1) {
                 names[j] = "(" + count[indexOfSpell] + "x) " + names[j]
             }
