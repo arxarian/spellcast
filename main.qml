@@ -6,7 +6,7 @@ Window {
     height: 960
     width: 540
 
-    color: "gold"
+    color: server.connected ? "gold" : "darkred"
 
     Component.onCompleted: {
 //            socket.connect("162.168.43.134", 9080)
