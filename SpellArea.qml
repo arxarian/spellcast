@@ -8,7 +8,6 @@ Item {
 
     property string spellType: "lightgray"
     property string spellName
-    property string base64source
 
 //    Timer {
 //        id: timer
@@ -23,7 +22,6 @@ Item {
     function resetArea() {
         text.visible = false
         touchArea.enabled = true
-        spellCast.base64source = spellArea.base64source
         spellCast.resetCompleteTime()
     }
 
@@ -46,7 +44,7 @@ Item {
                 spellArea.resetArea()
                 spellArea.spellName = message.spell.name
                 spellArea.spellType = message.spell.type
-                spellArea.base64source = message.spell.svg
+                spellCast.base64source = message.spell.svg
             }
         }
     }
