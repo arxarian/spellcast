@@ -4,9 +4,7 @@ import QtQuick.Particles 2.0
 import SpellCast 1.0
 
 Item {
-    id: root
-
-    signal reset()
+    id: spellArea
 
     property string spellType: "lightgray"
     property string base64source
@@ -21,6 +19,11 @@ Item {
 //        }
 //    }
 
+    function resetArea() {
+        text.visible = false
+        spellCast.base64source = spellArea.base64source
+    }
+
     onSpellTypeChanged: {
         if (spellType === "attack") {
             spellCast.background = "darkred"
@@ -33,9 +36,16 @@ Item {
         }
     }
 
-    onReset: {
-        text.visible = false
-        spellCast.base64source = root.base64source
+    Connections {
+        target: server
+        onMessageReceived: {
+            if (message.type === "turnStart") {
+//                console.log(JSON.stringify(message))
+                spellArea.resetArea()
+                spellArea.spellType = message.spell.type
+                spellArea.base64source = message.spell.svg
+            }
+        }
     }
 
     SpellCast {

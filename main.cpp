@@ -12,13 +12,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<SpellStats>();
     qmlRegisterType<SpellCast>("SpellCast", 1, 0, "SpellCast");
     qmlRegisterType<SpellProvider>("SpellCast", 1, 0, "SpellProvider");
-    qmlRegisterType<SocketCommunication>("SocketCommunication", 1, 0, "SocketCommunication");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    SocketCommunication server;
+    engine.rootContext()->setContextProperty("server", &server);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

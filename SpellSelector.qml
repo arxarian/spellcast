@@ -45,6 +45,20 @@ Item {
         internal.spellsPerTurn = spellSelector.spellsAmount
     }
 
+    Connections {
+        target: server
+        onMessageReceived: {
+            if (message.type === "prepareSpells") {
+                spellSelector.visible = true
+                spellSelector.spellsAmount = message.spellsAmount
+                spellSelector.spellSelectorData = message.spells
+            }
+            else {
+                spellSelector.visible = false   // TODO
+            }
+        }
+    }
+
     QtObject {
         id: internal
         property int spellsPerTurn: 0

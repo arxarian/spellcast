@@ -1,8 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 
-import SocketCommunication 1.0
-
 Window {
     visible: true
     width: 640
@@ -10,25 +8,15 @@ Window {
 
     color: "gold"
 
-    SocketCommunication {
-        id: socket
+    Component.onCompleted: {
+//            socket.connect("162.168.43.134", 9080)
+        server.connect("127.0.0.1", 9080)
+    }
 
-//        onConnectedChanged: socket.joinGame("ar")
+    Connections {
+        target: server
         onMessageReceived: {
             console.log("message received", message.type)
-            if (message.type === "prepareSpells") {
-                spellSelector.visible = true
-                spellSelector.spellsAmount = message.spellsAmount
-                spellSelector.spellSelectorData = message.spells
-            }
-            else if (message.type === "turnStart") {
-                spellSelector.visible = false
-                spellArea.base64source = message.spell.svg
-            }
-        }
-
-        Component.onCompleted: {
-            socket.connect("127.0.0.1", 9080)
         }
     }
 
