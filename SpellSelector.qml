@@ -6,7 +6,7 @@ Item {
 
     signal confirmed()
 
-    property int spellsPerTurn: 0
+    property int spellsAmount: 0
     property var spellSelectorData
     property var selectedSpells: []
 
@@ -38,11 +38,11 @@ Item {
         internal.count = spellSelectorData.map(a => a.amount)
 
         internal.names = spellSelectorData.map(a => a.name)
-        console.log(internal.count, internal.names, spellSelector.spellsPerTurn)
+        console.log(internal.count, internal.names, spellSelector.spellsAmount)
 
         updateModel()
 
-        internal.spellsPerTurn = spellSelector.spellsPerTurn
+        internal.spellsPerTurn = spellSelector.spellsAmount
     }
 
     QtObject {
