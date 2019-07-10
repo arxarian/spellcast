@@ -5,6 +5,10 @@ import SpellCast 1.0
 
 Item {
     id: root
+
+    signal reset()
+
+    property string spellType: "lightgray"
     property string base64source
 
 //    Timer {
@@ -17,6 +21,23 @@ Item {
 //        }
 //    }
 
+    onSpellTypeChanged: {
+        if (spellType === "attack") {
+            spellCast.background = "darkred"
+        }
+        else if (spellType === "defense") {
+            spellCast.background = "deepskyblue"
+        }
+        else {
+            spellCast.background = "lightgray"
+        }
+    }
+
+    onReset: {
+        text.visible = false
+        spellCast.base64source = root.base64source
+    }
+
     SpellCast {
         id: spellCast
 
@@ -26,9 +47,6 @@ Item {
 
         height: size
         width: size
-
-        base64source: root.base64source
-        onBase64sourceChanged: text.visible = false
 
         onSpellStatsChanged: {
             var spellSummary = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"

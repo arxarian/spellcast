@@ -14,6 +14,7 @@ struct SpellParameters
 class SpellCast : public QQuickPaintedItem
 {
     Q_OBJECT
+    Q_PROPERTY(QColor background READ background WRITE setBackground NOTIFY backgroundChanged)
     Q_PROPERTY(QString base64source READ base64source WRITE setBase64source NOTIFY base64sourceChanged)
     Q_PROPERTY(QString source READ source WRITE setSource NOTIFY sourceChanged)
     Q_PROPERTY(SpellStats* spellStats READ spellStats NOTIFY spellStatsChanged)
@@ -37,11 +38,15 @@ public:
 
     Q_INVOKABLE void reset();
 
+    QColor background() const;
+
 public slots:
     void setBase64source(QString base64source);
     void setSource(QString source);
     void resizeImage();
     void decorateSpellPath();
+
+    void setBackground(QColor background);
 
 private:
     bool LoadSource(const QString& path);
@@ -63,10 +68,13 @@ private:
 
     SpellStats m_spellStats;
 
+    QColor m_background;
+
 signals:
     void base64sourceChanged(QString base64source);
     void sourceChanged(QString source);
     void spellStatsChanged();
+    void backgroundChanged(QColor background);
 };
 
 #endif // SPELLCAST_H

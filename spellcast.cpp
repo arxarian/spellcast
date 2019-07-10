@@ -70,6 +70,11 @@ void SpellCast::reset()
     LoadSource(QQmlFile::urlToLocalFileOrQrc(m_source));
 }
 
+QColor SpellCast::background() const
+{
+    return m_background;
+}
+
 SpellStats *SpellCast::spellStats()
 {
     return &m_spellStats;
@@ -119,7 +124,7 @@ void SpellCast::resizeImage()
     QImage spellTemplate = m_loadedImage;
     QImage spellDrawing = m_loadedImage;
     AddImageBackground(&spellTemplate, m_spellParameters[Template].m_backgroundColor);
-    AddImageBackground(&spellDrawing, m_spellParameters[Drawing].m_backgroundColor);
+    AddImageBackground(&spellDrawing, /*m_spellParameters[Drawing].m_backgroundColor*/m_background);
 
     m_spellTemplate = spellTemplate;
     m_spellDrawing = spellDrawing;
@@ -149,6 +154,15 @@ void SpellCast::decorateSpellPath()
             }
         }
     }
+}
+
+void SpellCast::setBackground(QColor background)
+{
+    if (m_background == background)
+        return;
+
+    m_background = background;
+    emit backgroundChanged(m_background);
 }
 
 bool SpellCast::LoadSource(const QString &path)
