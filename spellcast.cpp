@@ -80,6 +80,11 @@ SpellStats *SpellCast::spellStats()
     return &m_spellStats;
 }
 
+void SpellCast::resetCompleteTime()
+{
+    m_spellStats.resetCompleteTime();
+}
+
 void SpellCast::setBase64source(QString base64source)
 {
     if (m_base64source == base64source || base64source.isEmpty())

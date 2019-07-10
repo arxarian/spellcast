@@ -27,7 +27,7 @@ Window {
         anchors.fill: parent
 
         onConfirmed: {
-            socket.selectedSpells(selectedSpells)
+            server.selectedSpells(selectedSpells)
         }
     }
 

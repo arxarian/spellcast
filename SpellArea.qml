@@ -7,6 +7,7 @@ Item {
     id: spellArea
 
     property string spellType: "lightgray"
+    property string spellName
     property string base64source
 
 //    Timer {
@@ -21,7 +22,9 @@ Item {
 
     function resetArea() {
         text.visible = false
+        touchArea.enabled = true
         spellCast.base64source = spellArea.base64source
+        spellCast.resetCompleteTime()
     }
 
     onSpellTypeChanged: {
@@ -40,8 +43,8 @@ Item {
         target: server
         onMessageReceived: {
             if (message.type === "turnStart") {
-//                console.log(JSON.stringify(message))
                 spellArea.resetArea()
+                spellArea.spellName = message.spell.name
                 spellArea.spellType = message.spell.type
                 spellArea.base64source = message.spell.svg
             }
@@ -59,15 +62,22 @@ Item {
         width: size
 
         onSpellStatsChanged: {
-            var spellSummary = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
-                        + "time " + spellCast.spellStats.time + " ms"
+            var accuracy = Math.round(spellCast.spellStats.covered * 100)
+            var penalty = Math.round(spellCast.spellStats.penalty * 10)
+            var timeElapsedSpell = spellCast.spellStats.time
+            var timeElapsedComplete = spellCast.spellStats.timeComplete
+
+            var summary = "accuracy " + accuracy + " %\n"
+                        + "time " + timeElapsedSpell + " ms"
 
             if (spellCast.spellStats.penalty > 0) {
-                spellSummary += "\npenalty " + Math.round(spellCast.spellStats.penalty * 10) + " %"
+                summary += "\npenalty " + penalty + " %"
             }
 
-            text.text = spellSummary
+            text.text = summary
             text.visible = true
+
+            server.sendSpellCast(spellArea.spellName, accuracy, penalty, timeElapsedComplete, timeElapsedSpell)
         }
 
         Text {
@@ -106,6 +116,8 @@ Item {
         }
 
         MultiPointTouchArea {
+            id: touchArea
+
             anchors.fill: parent
 
             touchPoints: [ TouchPoint { id: point1 } ]
@@ -129,9 +141,11 @@ Item {
                 spellCast.finalizeSpellPath()
                 bursty.enabled = false
 //                timer.restart()
+                touchArea.enabled = false
             }
             onCanceled: {
                 spellCast.finalizeSpellPath()
+                touchArea.enabled = false
             }
         }
     }

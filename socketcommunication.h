@@ -20,7 +20,9 @@ public:
 
     // messages
     Q_INVOKABLE void joinGame(QString userId);
-    Q_INVOKABLE void selectedSpells(QStringList list);
+    Q_INVOKABLE void sendSelectedSpells(QStringList spells);
+    Q_INVOKABLE void sendSpellCast(QString id, qreal accuracy, qreal penalty,
+                                   qint32 timeElapsedCompleted_ms, qint32 timeElapsedSpell_ms);
 
     bool connected() const;
 

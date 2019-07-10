@@ -78,7 +78,29 @@ void SocketCommunication::joinGame(QString userId)
     sendMessage(json);
 }
 
-void SocketCommunication::selectedSpells(QStringList list)
+void SocketCommunication::sendSelectedSpells(QStringList spells)
 {
-    qDebug() << list;
+    QVariantMap map;
+    map.insert("type", "spellsSelected");
+    map.insert("spells", spells);
+
+    QJsonDocument json = QJsonDocument::fromVariant(map);
+
+    sendMessage(json);
+}
+
+void SocketCommunication::sendSpellCast(QString id, qreal accuracy, qreal penalty, qint32 timeElapsedCompleted_ms, qint32 timeElapsedSpell_ms)
+{
+    QVariantMap map;
+    map.insert("type", "spellCast");
+    map.insert("id", id);
+    map.insert("accuracy", accuracy);
+    map.insert("penalty", penalty);
+    map.insert("timeElapsedCompleted_ms", timeElapsedCompleted_ms);
+    map.insert("timeElapsedSpell_ms", timeElapsedSpell_ms);
+
+    QJsonDocument json = QJsonDocument::fromVariant(map);
+
+    sendMessage(json);
+
 }

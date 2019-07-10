@@ -81,7 +81,7 @@ Item {
             text: "Confirm"
 
             onClicked: {
-                console.log(selectedSpells)
+                server.sendSelectedSpells(selectedSpells)
                 confirmed()
             }
         }
