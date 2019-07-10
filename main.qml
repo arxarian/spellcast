@@ -25,6 +25,10 @@ Window {
         z: 1
         visible: false
         anchors.fill: parent
+
+        onConfirmed: {
+            server.selectedSpells(selectedSpells)
+        }
     }
 
     SplashScreen {
