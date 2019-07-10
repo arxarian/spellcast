@@ -13,11 +13,17 @@ Window {
     SocketCommunication {
         id: socket
 
-        onConnectedChanged: socket.joinGame("ar")
+//        onConnectedChanged: socket.joinGame("ar")
         onMessageReceived: {
             console.log("message received", message.type)
             if (message.type === "prepareSpells") {
-                spellSelector.spellSelectorData = message.data
+                spellSelector.visible = true
+                spellSelector.spellsAmount = message.spellsAmount
+                spellSelector.spellSelectorData = message.spells
+            }
+            else if (message.type === "turnStart") {
+                spellSelector.visible = false
+                spellArea.base64source = message.spell.svg
             }
         }
 
@@ -28,7 +34,8 @@ Window {
 
     SpellSelector {
         id: spellSelector
-        z: 2
+        z: 1
+        visible: false
         anchors.fill: parent
 
         onConfirmed: {
@@ -38,8 +45,8 @@ Window {
 
     SplashScreen {
         id: splashScreen
-
         anchors.fill: parent
+        active: false
     }
 
     SpellArea {

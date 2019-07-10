@@ -4,19 +4,18 @@ import QtQuick.Particles 2.0
 import SpellCast 1.0
 
 Item {
-    Timer {
-        id: timer
+    id: root
+    property string base64source
 
-        interval: 3000
-        onTriggered: {
-            text.visible = false
-            spellProvider.nextSpell()
-        }
-    }
+//    Timer {
+//        id: timer
 
-    SpellProvider {
-        id: spellProvider
-    }
+//        interval: 3000
+//        onTriggered: {
+//            text.visible = false
+//            spellProvider.nextSpell()
+//        }
+//    }
 
     SpellCast {
         id: spellCast
@@ -28,7 +27,8 @@ Item {
         height: size
         width: size
 
-        source: spellProvider.spellSource
+        base64source: root.base64source
+        onBase64sourceChanged: text.visible = false
 
         onSpellStatsChanged: {
             var spellSummary = "accuracy " + Math.round(spellCast.spellStats.covered * 100) + " %\n"
@@ -100,7 +100,7 @@ Item {
             onReleased: {
                 spellCast.finalizeSpellPath()
                 bursty.enabled = false
-                timer.restart()
+//                timer.restart()
             }
             onCanceled: {
                 spellCast.finalizeSpellPath()

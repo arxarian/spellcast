@@ -4,7 +4,7 @@ import SpellCast 1.0
 Item {
     id: splashScreen
 
-    readonly property bool active: loader.active
+    property alias active: loader.active
 
     z: 1
 

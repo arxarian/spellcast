@@ -1,5 +1,7 @@
 #include "spellcast.h"
 
+#include <QSvgRenderer>
+
 SpellCast::SpellCast(QQuickItem *parent) : QQuickPaintedItem(parent)
 {
     setAntialiasing(true);
@@ -20,6 +22,11 @@ void SpellCast::paint(QPainter *painter)
 {
     const QRect targetRect(0, 0, static_cast<int>(width()), static_cast<int>(height()));
     painter->drawImage(targetRect, m_spellDrawing);
+}
+
+QString SpellCast::base64source() const
+{
+    return m_base64source;
 }
 
 QString SpellCast::source() const
@@ -48,7 +55,7 @@ void SpellCast::updateSpellPath(QPointF point)
     DrawPath(m_spellTemplate, previousPoint, point, m_spellParameters[Template]);
 //    DrawPath(m_spellDrawing, previousPoint, point, m_spellParameters[Drawing]);
 
-    emit update();
+    update();
 }
 
 void SpellCast::finalizeSpellPath()
@@ -66,6 +73,29 @@ void SpellCast::reset()
 SpellStats *SpellCast::spellStats()
 {
     return &m_spellStats;
+}
+
+void SpellCast::setBase64source(QString base64source)
+{
+    if (m_base64source == base64source || base64source.isEmpty())
+    {
+        return;
+    }
+
+    QXmlStreamReader xml(base64source);
+    if (xml.hasError())
+    {
+        qInfo() << "xml error" << xml.errorString();
+        return;
+    }
+    QSvgRenderer renderer(&xml);
+    qDebug() << "viewbox" << renderer.viewBoxF();
+
+    m_loadedImage = QImage (500, 500, QImage::Format_ARGB32);
+    QPainter painter(&m_loadedImage);
+    renderer.render(&painter);
+
+    resizeImage();
 }
 
 void SpellCast::setSource(QString source)
