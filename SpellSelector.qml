@@ -74,24 +74,12 @@ Item {
         anchors.margins: parent.width * 0.05
         spacing: 10
 
-        Button {
-            id:  confirmButton
-            height: parent.height / 10
-            width: parent.width
-            text: "Confirm"
-
-            onClicked: {
-                server.sendSelectedSpells(selectedSpells)
-                confirmed()
-            }
-        }
-
         ListView {
             id: spellSlots
 
             property int delegateHeight: height / 10
 
-            height: parent.height - confirmButton.height - parent.anchors.margins * 2
+            height: parent.height - parent.anchors.margins * 2
             width: parent.width
 
             model: internal.spellsPerTurn
@@ -122,6 +110,10 @@ Item {
 
                     var indexOfSpell = internal.names.indexOf(comboBox.displayText)
                     internal.count[indexOfSpell]--
+
+                    if (currentIndex > 0) {
+                        server.sendSelectedSpells(selectedSpells)
+                    }
                 }
             }
         }
