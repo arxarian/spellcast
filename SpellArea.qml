@@ -7,17 +7,7 @@ Item {
     id: spellArea
 
     property string spellType: "lightgray"
-    property string spellName
-
-//    Timer {
-//        id: timer
-
-//        interval: 3000
-//        onTriggered: {
-//            text.visible = false
-//            spellProvider.nextSpell()
-//        }
-//    }
+    property string spellId
 
     function resetArea() {
         text.visible = false
@@ -43,7 +33,7 @@ Item {
             if (message.type === "turnStart") {
                 spellArea.resetArea()
                 if (message.spell !== null) {
-                    spellArea.spellName = message.spell.id
+                    spellArea.spellId = message.spell.id
                     spellArea.spellType = message.spell.type
                     spellCast.base64source = message.spell.svg
                 }
@@ -77,7 +67,7 @@ Item {
             text.text = summary
             text.visible = true
 
-            server.sendSpellCast(spellArea.spellName, accuracy, penalty, timeElapsedComplete, timeElapsedSpell)
+            server.sendSpellCast(spellArea.spellId, accuracy, penalty, timeElapsedComplete, timeElapsedSpell)
         }
 
         Text {
@@ -140,7 +130,6 @@ Item {
             onReleased: {
                 spellCast.finalizeSpellPath()
                 bursty.enabled = false
-//                timer.restart()
                 touchArea.enabled = false
             }
             onCanceled: {
