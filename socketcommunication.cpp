@@ -93,7 +93,7 @@ void SocketCommunication::sendSpellCast(QString id, qreal accuracy, qreal penalt
 {
     QVariantMap map;
     map.insert("type", "spellCast");
-    map.insert("id", id);
+    map.insert("spellId", id);
     map.insert("accuracy", accuracy);
     map.insert("penalty", penalty);
     map.insert("timeElapsedCompleted_ms", timeElapsedCompleted_ms);
