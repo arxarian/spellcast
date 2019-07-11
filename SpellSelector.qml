@@ -35,11 +35,11 @@ Item {
     onSpellSelectorDataChanged: {
         selectedSpells = []
         selectedSpells.length = spellSelector.spellsAmount
+
         internal.maxCount = spellSelectorData.map(a => a.amount)
         internal.count = spellSelectorData.map(a => a.amount)
-
+        internal.ids = spellSelectorData.map(a => a.id)
         internal.names = spellSelectorData.map(a => a.name)
-        console.log(internal.count, internal.names, spellSelector.spellsAmount)
 
         updateModel()
 
@@ -65,6 +65,7 @@ Item {
         property int spellsPerTurn: 0
         property var maxCount: []
         property var count: []
+        property var ids: []
         property var names: []
         property var displayModel: []
         property var displayTexts: []
@@ -107,10 +108,10 @@ Item {
 
                 onCurrentIndexChanged: {
                     comboBox.displayText = internal.displayTexts[currentIndex - 1]
-                    spellSelector.selectedSpells[index] = comboBox.displayText
 
                     var indexOfSpell = internal.names.indexOf(comboBox.displayText)
                     internal.count[indexOfSpell]--
+                    spellSelector.selectedSpells[index] = internal.ids[indexOfSpell]
 
                     if (currentIndex > 0) {
                         server.sendSelectedSpells(selectedSpells)
