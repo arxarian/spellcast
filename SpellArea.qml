@@ -38,6 +38,15 @@ Item {
                     spellCast.base64source = message.spell.svg
                 }
             }
+
+    StatArea {
+        id: statArea
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: spellCast.top
         }
     }
 
