@@ -34,6 +34,7 @@ Item {
 
     onSpellSelectorDataChanged: {
         selectedSpells = []
+        selectedSpells.length = spellSelector.spellsAmount
         internal.maxCount = spellSelectorData.map(a => a.amount)
         internal.count = spellSelectorData.map(a => a.amount)
 
