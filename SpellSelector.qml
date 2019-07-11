@@ -11,7 +11,7 @@ Item {
     property var selectedSpells: []
 
     function updateModel() {
-        var count = internal.count
+        var count = internal.amount
         var names = []
         for (var i = 0; i < count.length; ++i) {
             if (count[i] > 0) {
@@ -36,14 +36,14 @@ Item {
         selectedSpells = []
         selectedSpells.length = spellSelector.spellsAmount
 
-        internal.maxCount = spellSelectorData.map(a => a.amount)
-        internal.count = spellSelectorData.map(a => a.amount)
+        internal.maxAmount = spellSelectorData.map(a => a.amount)
+        internal.amount = spellSelectorData.map(a => a.amount)
         internal.ids = spellSelectorData.map(a => a.id)
         internal.names = spellSelectorData.map(a => a.name)
 
         updateModel()
 
-        internal.spellsPerTurn = spellSelector.spellsAmount
+        internal.spellsAmount = spellSelector.spellsAmount
     }
 
     Connections {
@@ -62,9 +62,9 @@ Item {
 
     QtObject {
         id: internal
-        property int spellsPerTurn: 0
-        property var maxCount: []
-        property var count: []
+        property int spellsAmount: 0
+        property var maxAmount: []
+        property var amount: []
         property var ids: []
         property var names: []
         property var displayModel: []
@@ -84,7 +84,7 @@ Item {
             height: parent.height - parent.anchors.margins * 2
             width: parent.width
 
-            model: internal.spellsPerTurn
+            model: internal.spellsAmount
 
             spacing: 10
             delegate: ComboBox {
@@ -98,7 +98,7 @@ Item {
                 onPressedChanged: {
                     if (pressed) {
                         var indexOfSpell = internal.names.indexOf(comboBox.displayText)
-                        internal.count[indexOfSpell]++
+                        internal.amount[indexOfSpell]++
 
                         comboBox.model = null
                         updateModel()
@@ -110,7 +110,7 @@ Item {
                     comboBox.displayText = internal.displayTexts[currentIndex - 1]
 
                     var indexOfSpell = internal.names.indexOf(comboBox.displayText)
-                    internal.count[indexOfSpell]--
+                    internal.amount[indexOfSpell]--
                     spellSelector.selectedSpells[index] = internal.ids[indexOfSpell]
 
                     if (currentIndex > 0) {
