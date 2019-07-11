@@ -42,9 +42,11 @@ Item {
         onMessageReceived: {
             if (message.type === "turnStart") {
                 spellArea.resetArea()
-                spellArea.spellName = message.spell.name
-                spellArea.spellType = message.spell.type
-                spellCast.base64source = message.spell.svg
+                if (message.spell !== null) {
+                    spellArea.spellName = message.spell.id
+                    spellArea.spellType = message.spell.type
+                    spellCast.base64source = message.spell.svg
+                }
             }
         }
     }
