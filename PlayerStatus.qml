@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 Item {
     id: playerStatus
 
+    property string playerId
     property string name
     property int lifeMax: 200
     property int life: (index + 1) * 50
@@ -42,8 +43,8 @@ Item {
 
                 Behavior on width {
                     NumberAnimation {
-                        easing.type: Easing.OutCubic
-                        duration: 1000
+                        easing.type: Easing.OutQuint
+                        duration: 1500
                     }
                 }
             }

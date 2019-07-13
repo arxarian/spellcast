@@ -38,6 +38,12 @@ Item {
                     spellCast.base64source = message.spell.svg
                 }
             }
+            else if (message.type === "turnEnd") {
+                spellCast.base64source = ""
+                text.visible = false
+            }
+        }
+    }
 
     StatArea {
         id: statArea
