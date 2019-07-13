@@ -6,5 +6,6 @@
         <file>SplashScreen.qml</file>
         <file>SpellSelector.qml</file>
         <file>PlayerStatus.qml</file>
+        <file>LoginScreen.qml</file>
     </qresource>
 </RCC>

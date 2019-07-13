@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<SpellProvider>("SpellCast", 1, 0, "SpellProvider");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setOrganizationName("spellcaster");
+    QCoreApplication::setApplicationName("Spell Caster");
 
     QGuiApplication app(argc, argv);
 

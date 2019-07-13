@@ -67,15 +67,9 @@ void SocketCommunication::setState(QAbstractSocket::SocketState state)
     qInfo() << "state" << state;
 }
 
-void SocketCommunication::joinGame(QString userId)
+void SocketCommunication::setUserName(QString userId)
 {
-    QVariantMap map;
-    map.insert("type", "joinGame");
-    map.insert("userId", userId);
-
-    QJsonDocument json = QJsonDocument::fromVariant(map);
-
-    sendMessage(json);
+    m_userId = userId;
 }
 
 void SocketCommunication::sendSelectedSpells(QStringList spells)
