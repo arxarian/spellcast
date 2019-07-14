@@ -13,9 +13,12 @@ bool SocketCommunication::connected() const
     return m_connected;
 }
 
-void SocketCommunication::connect(QString ip, quint16 port)
+void SocketCommunication::connect(QString address, quint16 port)
 {
-    socket.connectToHost(ip, port);
+    m_connection.m_address = QHostAddress(address);
+    m_connection.m_port = port;
+
+    socket.connectToHost(address, port);
 }
 
 void SocketCommunication::disconnect()
@@ -24,6 +27,14 @@ void SocketCommunication::disconnect()
     {
         socket.disconnectFromHost();
     }
+}
+
+void SocketCommunication::reconnect()
+{
+    m_reconnect = true;
+
+    socket.close();
+    connect(m_connection.m_address.toString(), m_connection.m_port);
 }
 
 void SocketCommunication::sendMessage(QJsonDocument jsonDoc)
@@ -46,7 +57,23 @@ void SocketCommunication::receiveMessage()
         qInfo() << error.errorString() << arrData;
     }
 
-    emit messageReceived(d.object());
+    QJsonObject jObject = d.object();
+
+    const QString& messageType = jObject.value(QLatin1String("type")).toString();
+
+    if (messageType == QLatin1String("hello"))
+    {
+        if (m_reconnect)
+        {
+            rejoinSession();
+        }
+        else
+        {
+            m_connection.m_sessionId = jObject.value(QLatin1String("sessionId")).toString();
+        }
+    }
+
+    emit messageReceived(jObject);
 }
 
 void SocketCommunication::setState(QAbstractSocket::SocketState state)
@@ -96,5 +123,15 @@ void SocketCommunication::sendSpellCast(QString id, qreal accuracy, qreal penalt
     QJsonDocument json = QJsonDocument::fromVariant(map);
 
     sendMessage(json);
+}
 
+void SocketCommunication::rejoinSession()
+{
+    QVariantMap map;
+    map.insert("type", "rejoinSession");
+    map.insert("sessionId", m_connection.m_sessionId);
+
+    QJsonDocument json = QJsonDocument::fromVariant(map);
+
+    sendMessage(json);
 }

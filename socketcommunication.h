@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QHostAddress>
 
 class SocketCommunication : public QObject
 {
@@ -14,8 +15,16 @@ class SocketCommunication : public QObject
 public:
     explicit SocketCommunication(QObject *parent = nullptr);
 
-    Q_INVOKABLE void connect(QString ip, quint16 port);
+    struct Connection
+    {
+        QHostAddress m_address;
+        quint16 m_port;
+        QString m_sessionId;
+    };
+
+    Q_INVOKABLE void connect(QString address, quint16 port);
     Q_INVOKABLE void disconnect();
+    Q_INVOKABLE void reconnect();
     Q_INVOKABLE void setUserName(QString userId);
 
     Q_INVOKABLE void sendMessage(QJsonDocument jsonDoc);
@@ -25,6 +34,7 @@ public:
     Q_INVOKABLE void sendSpellCast(QString id, qreal accuracy, qreal penalty,
                                    qint32 timeElapsedCompleted_ms, qint32 timeElapsedSpell_ms);
 
+    void rejoinSession();
     bool connected() const;
 
 public slots:
@@ -37,6 +47,8 @@ private:
     QTcpSocket socket;
     QString m_userId;
     bool m_connected = false;
+    bool m_reconnect = false;
+    Connection m_connection;
 
 signals:
     void connectedChanged();
