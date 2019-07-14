@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import Qt.labs.settings 1.0
+import QtQuick.Controls 2.5
 
 Item {
     id: loginScreen
@@ -65,6 +66,15 @@ Item {
 
                 server.setUserName(username)
                 server.connect(loginScreen.ip, loginScreen.port)
+            }
+        }
+
+        Button {
+            visible: server.connectionLost
+            text: qsTr("Reconnect")
+            width: column.delegateWidth
+            onClicked: {
+                server.reconnect()
             }
         }
     }

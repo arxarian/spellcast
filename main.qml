@@ -39,6 +39,11 @@ Window {
 
     Connections {
         target: server
+        onConnectionLostChanged: {
+            if (server.connectionLost) {
+                screensView.currentIndex = loginScreen
+            }
+        }
         onMessageReceived: {
             console.log("message received", message.type)
 

@@ -11,6 +11,7 @@ class SocketCommunication : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool connected READ connected NOTIFY connectedChanged)
+    Q_PROPERTY(bool connectionLost READ connectionLost NOTIFY connectionLostChanged)
 
 public:
     explicit SocketCommunication(QObject *parent = nullptr);
@@ -36,6 +37,7 @@ public:
 
     void rejoinSession();
     bool connected() const;
+    bool connectionLost() const;
 
 public slots:
     void receiveMessage();
@@ -47,13 +49,15 @@ private:
     QTcpSocket socket;
     QString m_userId;
     bool m_connected = false;
+    bool m_connectionLost = false;
     bool m_reconnect = false;
     Connection m_connection;
 
+
 signals:
     void connectedChanged();
+    void connectionLostChanged();
     void messageReceived(QJsonObject message);
-
 };
 
 #endif // SOCKETTEST_H

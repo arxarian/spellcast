@@ -13,6 +13,11 @@ bool SocketCommunication::connected() const
     return m_connected;
 }
 
+bool SocketCommunication::connectionLost() const
+{
+    return m_connectionLost;
+}
+
 void SocketCommunication::connect(QString address, quint16 port)
 {
     m_connection.m_address = QHostAddress(address);
@@ -33,7 +38,6 @@ void SocketCommunication::reconnect()
 {
     m_reconnect = true;
 
-    socket.close();
     connect(m_connection.m_address.toString(), m_connection.m_port);
 }
 
@@ -82,11 +86,19 @@ void SocketCommunication::setState(QAbstractSocket::SocketState state)
     {
     case QAbstractSocket::ConnectedState:
         m_connected = true;
+        m_connectionLost = false;
+
         emit connectedChanged();
+        emit connectionLostChanged();
+
         break;
     case QAbstractSocket::UnconnectedState:
         m_connected = false;
+        m_connectionLost = true;
+
         emit connectedChanged();
+        emit connectionLostChanged();
+
         break;
     default:
         break;
