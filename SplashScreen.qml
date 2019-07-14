@@ -4,19 +4,6 @@ import SpellCast 1.0
 Item {
     id: splashScreen
 
-    property alias active: loader.active
-
-    z: 1
-
-    Timer {
-        interval: 2000
-        running: true
-        onTriggered: {
-            splashScreen.z = 0
-            loader.active = false
-        }
-    }
-
     Loader {
         id: loader
         anchors.centerIn: parent
@@ -29,10 +16,6 @@ Item {
             width: size
 
             source: "qrc:/logo/logo.svg"
-
-            MultiPointTouchArea {
-                anchors.fill: parent
-            }
         }
     }
 }

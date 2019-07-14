@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Controls 2.5
 import QtQuick.Window 2.2
 
 Window {
@@ -8,34 +9,46 @@ Window {
 
     color: server.connected ? "gold" : "darkred"
 
-    Component.onCompleted: {
-//            socket.connect("162.168.43.134", 9080)
-        server.connect("127.0.0.1", 9080)
+    readonly property int splashScreenIndex: 0
+    readonly property int loginScreenIndex: 1
+    readonly property int selectorScreenIndex: 2
+    readonly property int castScreenIndex: 3
+
+    SwipeView {
+        id: screensView
+        anchors.fill: parent
+        currentIndex: loginScreenIndex
+        interactive: false
+
+        SplashScreen {
+            id: splashScreen
+        }
+
+        LoginScreen {
+            id: loginScreen
+        }
+
+        SpellSelector {
+            id: spellSelector
+        }
+
+        SpellArea {
+            id: spellArea
+        }
     }
 
     Connections {
         target: server
         onMessageReceived: {
             console.log("message received", message.type)
+
+            if (message.type === "prepareSpells") {
+                screensView.currentIndex = selectorScreenIndex
+            }
+            else if (message.type === "turnStart" ||
+                     message.type === "turnEnd") {
+                screensView.currentIndex = castScreenIndex
+            }
         }
-    }
-
-    SpellSelector {
-        id: spellSelector
-        z: 1
-        visible: false
-        anchors.fill: parent
-    }
-
-    SplashScreen {
-        id: splashScreen
-        anchors.fill: parent
-        active: false
-    }
-
-    SpellArea {
-        id: spellArea
-
-        anchors.fill: parent
     }
 }
