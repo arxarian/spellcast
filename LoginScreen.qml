@@ -51,7 +51,9 @@ Item {
 
             onTextChanged: parseIpAdressPort()
             Component.onCompleted: {
-                text = settings.ip + ":" + settings.port
+                if (settings.ip.length > 0 && settings.port.length > 0) {
+                    text = settings.ip + ":" + settings.port
+                }
             }
         }
 
