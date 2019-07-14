@@ -39,9 +39,9 @@ Window {
 
     Connections {
         target: server
-        onConnectionLostChanged: {
-            if (server.connectionLost) {
-                screensView.currentIndex = loginScreen
+        onConnected: {
+            if (server.connected === false) {
+                screensView.currentIndex = loginScreenIndex
             }
         }
         onMessageReceived: {
