@@ -58,7 +58,7 @@ Item {
         }
 
         Button {
-            enabled: ip.length > 0 && port.length > 0 && username.length > 0
+            enabled: ip.length > 0 && port.length > 0 && username.length > 0 && server.connected === false
             text: qsTr("Connect")
             width: column.delegateWidth
             onClicked: {
