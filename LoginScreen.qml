@@ -37,6 +37,7 @@ Item {
 
         TextField {
             id: usernameField
+            enabled: server.connected === false && server.connecting === false
             width: column.delegateWidth
             text: settings.username
             placeholderText: qsTr("user name")
@@ -45,6 +46,7 @@ Item {
 
         TextField {
             id: ipAdrressField
+            enabled: server.connected === false && server.connecting === false
             width: column.delegateWidth
             placeholderText: qsTr("ip_adrress:port")
             horizontalAlignment: TextInput.AlignHCenter
@@ -58,7 +60,8 @@ Item {
         }
 
         Button {
-            enabled: ip.length > 0 && port.length > 0 && username.length > 0 && server.connected === false
+            enabled: ip.length > 0 && port.length > 0 && username.length > 0 &&
+                     server.connected === false && server.connecting === false
             text: qsTr("Connect")
             width: column.delegateWidth
             onClicked: {
