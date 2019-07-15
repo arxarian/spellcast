@@ -7,5 +7,7 @@
         <file>SpellSelector.qml</file>
         <file>PlayerStatus.qml</file>
         <file>LoginScreen.qml</file>
+        <file>Progressbar.qml</file>
+        <file>TimeoutBar.qml</file>
     </qresource>
 </RCC>

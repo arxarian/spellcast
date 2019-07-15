@@ -39,32 +39,37 @@ Item {
         }
     }
 
-    ListView {
-        id: statView
-
-        property int delegateHeight: statView.height / 6
-        property var names: []
-        property var lifesMax: []
-        property var lifes: []
-        property var ids: []    // changed only once on prepareSpells
-
-        anchors.topMargin: parent.height / 6
-        anchors.leftMargin: parent.width / 10
-        anchors.rightMargin: parent.width / 10
+    Item {
         anchors.fill: parent
+        anchors.topMargin: parent.height * 0.1
+        anchors.bottomMargin: parent.height * 0.1
 
-        interactive: false
-        spacing: 10
+        ListView {
+            id: statView
 
-        model: 0
+            property real delegateHeight: Math.max(0, height / count - spacing / 2)
+            property real delegateWidth: statView.width
+            property var names: []
+            property var lifesMax: []
+            property var lifes: []
+            property var ids: []    // changed only once on prepareSpells
 
-        delegate: PlayerStatus {
-            playerId: statView.ids[index]
-            name: statView.names[index]
-            life: Math.max(0, statView.lifes[index])
-            lifeMax: statView.lifesMax[index]
-            height: statView.delegateHeight
-            width: statView.width
+            anchors.fill: parent
+
+            interactive: false
+            spacing: 10
+
+            model: 0
+
+            delegate: PlayerStatus {
+                height: statView.delegateHeight
+                width: statView.delegateWidth
+
+                playerId: statView.ids[index]
+                name: statView.names[index]
+                life: Math.max(0, statView.lifes[index])
+                lifeMax: statView.lifesMax[index]
+            }
         }
     }
 }

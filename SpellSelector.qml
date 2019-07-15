@@ -50,6 +50,8 @@ Item {
             if (message.type === "prepareSpells") {
                 spellSelector.spellsAmount = message.spellsAmount
                 spellSelector.spellSelectorData = message.spells
+
+                timeoutBar.setTimeout(message.timeout)
             }
         }
     }
@@ -69,6 +71,13 @@ Item {
         anchors.fill: parent
         anchors.margins: parent.width * 0.05
         spacing: 10
+
+        TimeoutBar {
+            id: timeoutBar
+
+            height: parent.height / 15
+            width: parent.width
+        }
 
         ListView {
             id: spellSlots

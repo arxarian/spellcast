@@ -36,6 +36,8 @@ Item {
                     spellArea.spellId = message.spell.id
                     spellArea.spellType = message.spell.type
                     spellCast.base64source = message.spell.svg
+
+                    timeoutBar.setTimeout(message.timeout)
                 }
             }
             else if (message.type === "turnEnd") {
@@ -45,16 +47,34 @@ Item {
         }
     }
 
-    StatArea {
-        id: statArea
-
+    Column {
+        id: column
+        z: 1
+        spacing: 10
         anchors {
             top: parent.top
+            topMargin: parent.width * 0.05
             left: parent.left
+            leftMargin: parent.width * 0.05
             right: parent.right
+            rightMargin: parent.width * 0.05
             bottom: spellCast.top
         }
+
+        TimeoutBar {
+            id: timeoutBar
+            height: spellArea.height / 15
+            width: parent.width
+        }
+
+        StatArea {
+            id: statArea
+
+            height: parent.height - parent.spacing - parent.height / 15 - column.parent.width * 0.1
+            width: parent.width
+        }
     }
+
 
     SpellCast {
         id: spellCast
