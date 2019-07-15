@@ -39,7 +39,7 @@ Window {
 
     Connections {
         target: server
-        onConnected: {
+        onConnectedChanged: {
             if (server.connected === false) {
                 screensView.currentIndex = loginScreenIndex
             }
