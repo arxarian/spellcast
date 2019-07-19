@@ -42,7 +42,7 @@ Item {
             }
             else if (message.type === "turnEnd") {
                 spellCast.base64source = ""
-                text.visible = false
+                text.visible = true
             }
         }
     }

@@ -110,10 +110,12 @@ void SocketCommunication::setState(QAbstractSocket::SocketState state)
 
         break;
     case QAbstractSocket::UnconnectedState:
+        m_connectionLost = m_connected;
+        m_connecting = false;
         m_connected = false;
-        m_connectionLost = true;
 
         emit connectedChanged();
+        emit connectingChanged();
         emit connectionLostChanged();
 
         break;
