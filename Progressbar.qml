@@ -3,8 +3,8 @@ import QtQuick 2.9
 Rectangle {
     id: root
 
-    property real to: 100
-    property real value: 50
+    property real to: 1
+    property real value: 0.5
     property color foregroundColor: "green"
     property color backgroundColor: "darkred"
 
