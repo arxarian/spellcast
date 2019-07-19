@@ -101,12 +101,14 @@ ApplicationWindow  {
                 screensView.currentIndex = selectorScreenIndex
                 requestedScreen = "selector"
                 requestredTabButtonIndex = 1
+                logs.append("prepareSpells")
             }
             else if (message.type === "turnStart" ||
                      message.type === "turnEnd") {
                 screensView.currentIndex = castScreenIndex
                 requestedScreen = "arena"
                 requestredTabButtonIndex = 1
+                logs.append("turnStart || turnEnd")
             }
         }
     }
