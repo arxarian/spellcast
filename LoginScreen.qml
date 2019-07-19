@@ -82,5 +82,14 @@ Item {
                 server.reconnect()
             }
         }
+
+        Button {
+            visible: server.connected
+            text: qsTr("Disconnect")
+            width: column.delegateWidth
+            onClicked: {
+                server.disconnect()
+            }
+        }
     }
 }
