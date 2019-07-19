@@ -6,6 +6,7 @@
 #include "spellprovider.h"
 
 #include "socketcommunication.h"
+#include "logsmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +21,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
     SocketCommunication server;
+    LogsManager logs;
+    QObject::connect(&server, &SocketCommunication::log, &logs, &LogsManager::append);
+    engine.rootContext()->setContextProperty("logs", &logs);
     engine.rootContext()->setContextProperty("server", &server);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

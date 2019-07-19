@@ -9,5 +9,6 @@
         <file>LoginScreen.qml</file>
         <file>Progressbar.qml</file>
         <file>TimeoutBar.qml</file>
+        <file>Logs.qml</file>
     </qresource>
 </RCC>

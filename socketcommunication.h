@@ -63,6 +63,8 @@ signals:
     void connectingChanged();
     void connectionLostChanged();
     void messageReceived(QJsonObject message);
+
+    void log(QString log);
 };
 
 #endif // SOCKETTEST_H

@@ -1,6 +1,7 @@
 #include "socketcommunication.h"
 
 #include <QDebug>
+#include <QMetaEnum>
 
 SocketCommunication::SocketCommunication(QObject *parent) : QObject(parent)
 {
@@ -64,6 +65,7 @@ void SocketCommunication::receiveMessage()
     if (d.isNull())
     {
         qInfo() << error.errorString() << arrData;
+        emit log(error.errorString());
     }
 
     QJsonObject jObject = d.object();
@@ -118,6 +120,10 @@ void SocketCommunication::setState(QAbstractSocket::SocketState state)
     default:
         break;
     }
+
+    QMetaEnum metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketState>();
+    emit log(QString("connection: %1").arg(metaEnum.valueToKey(state)));
+
     qInfo() << "state" << state;
 }
 
