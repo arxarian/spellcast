@@ -57,34 +57,47 @@ void SocketCommunication::sendMessage(QJsonDocument jsonDoc)
 
 void SocketCommunication::receiveMessage()
 {
-    QByteArray arrData = socket.readAll();
+    m_buffer.append(socket.readAll());
 
-    QJsonParseError error;
-    QJsonDocument d = QJsonDocument::fromJson(arrData, &error);
-
-    if (d.isNull())
+    while (m_buffer.isEmpty() == false)
     {
-        qInfo() << error.errorString() << arrData;
-        emit log(error.errorString());
-    }
+        qint32 nTerminator = m_buffer.indexOf("\r\n");
 
-    QJsonObject jObject = d.object();
-
-    const QString& messageType = jObject.value(QLatin1String("type")).toString();
-
-    if (messageType == QLatin1String("hello"))
-    {
-        if (m_reconnect)
+        if (nTerminator < 0)
         {
-            rejoinSession();
+            break;
         }
-        else
-        {
-            m_connection.m_sessionId = jObject.value(QLatin1String("sessionId")).toString();
-        }
-    }
 
-    emit messageReceived(jObject);
+        QByteArray arrData = m_buffer.left(nTerminator + 2);
+        m_buffer.remove(0, nTerminator + 2);
+
+        QJsonParseError error;
+        QJsonDocument d = QJsonDocument::fromJson(arrData, &error);
+
+        if (d.isNull())
+        {
+            qInfo() << error.errorString() << arrData;
+            emit log("json error:" + error.errorString());
+        }
+
+        QJsonObject jObject = d.object();
+
+        const QString& messageType = jObject.value(QLatin1String("type")).toString();
+
+        if (messageType == QLatin1String("hello"))
+        {
+            if (m_reconnect)
+            {
+                rejoinSession();
+            }
+            else
+            {
+                m_connection.m_sessionId = jObject.value(QLatin1String("sessionId")).toString();
+            }
+        }
+
+        emit messageReceived(jObject);
+    }
 }
 
 void SocketCommunication::setState(QAbstractSocket::SocketState state)

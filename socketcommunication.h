@@ -56,6 +56,8 @@ private:
     bool m_connectionLost = false;
     bool m_reconnect = false;
 
+    QByteArray m_buffer;
+
     Connection m_connection;
 
 signals:
