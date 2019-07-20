@@ -39,8 +39,8 @@ Item {
         internal.ids = spellSelectorData.map(a => a.id)
         internal.names = spellSelectorData.map(a => a.name)
 
+        internal.spellsAmount = 0
         updateModel()
-
         internal.spellsAmount = spellSelector.spellsAmount
     }
 
