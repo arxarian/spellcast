@@ -95,20 +95,18 @@ ApplicationWindow  {
             }
         }
         onMessageReceived: {
-            console.log("message received", message.type)
+            logs.append("message: " + message.type)
 
             if (message.type === "prepareSpells") {
                 screensView.currentIndex = selectorScreenIndex
                 requestedScreen = "selector"
                 requestredTabButtonIndex = 1
-                logs.append("prepareSpells")
             }
             else if (message.type === "turnStart" ||
                      message.type === "turnEnd") {
                 screensView.currentIndex = castScreenIndex
                 requestedScreen = "arena"
                 requestredTabButtonIndex = 1
-                logs.append("turnStart || turnEnd")
             }
         }
     }
