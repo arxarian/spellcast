@@ -2,7 +2,8 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes
 
 TODO
 -fix uninterrupted spell casting for more turns
--fix two and more incoming messages
+-possible pause between spellselector and spellcast, so user cannot cast by unintetional touch
+-new turn notification
 
 Login
 -login screen
