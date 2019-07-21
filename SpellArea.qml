@@ -39,10 +39,15 @@ Item {
 
                     timeoutBar.setTimeout(message.timeout)
                 }
+                else {
+                    spellArea.spellId = ""
+                    spellCast.reset()
+                }
             }
             else if (message.type === "turnEnd") {
-                spellCast.base64source = ""
-                text.visible = true
+                if (spellArea.spellId.length > 0) {
+                    text.visible = true
+                }
             }
         }
     }
@@ -87,22 +92,25 @@ Item {
         width: size
 
         onSpellStatsChanged: {
-            var accuracy = Math.round(spellCast.spellStats.covered * 100)
-            var penalty = Math.round(spellCast.spellStats.penalty * 10)
-            var timeElapsedSpell = spellCast.spellStats.time
-            var timeElapsedComplete = spellCast.spellStats.timeComplete
+            if (spellArea.spellId.length > 0) {
 
-            var summary = "accuracy " + accuracy + " %\n"
+                var accuracy = Math.round(spellCast.spellStats.covered * 100)
+                var penalty = Math.round(spellCast.spellStats.penalty * 10)
+                var timeElapsedSpell = spellCast.spellStats.time
+                var timeElapsedComplete = spellCast.spellStats.timeComplete
+
+                var summary = "accuracy " + accuracy + " %\n"
                         + "time " + timeElapsedSpell + " ms"
 
-            if (spellCast.spellStats.penalty > 0) {
-                summary += "\npenalty " + penalty + " %"
+                if (spellCast.spellStats.penalty > 0) {
+                    summary += "\npenalty " + penalty + " %"
+                }
+
+                text.text = summary
+                text.visible = true
+
+                server.sendSpellCast(spellArea.spellId, accuracy, penalty, timeElapsedComplete, timeElapsedSpell)
             }
-
-            text.text = summary
-            text.visible = true
-
-            server.sendSpellCast(spellArea.spellId, accuracy, penalty, timeElapsedComplete, timeElapsedSpell)
         }
 
         Text {

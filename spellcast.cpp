@@ -67,7 +67,8 @@ void SpellCast::finalizeSpellPath()
 
 void SpellCast::reset()
 {
-    LoadSource(QQmlFile::urlToLocalFileOrQrc(m_source));
+    m_spellDrawing = QImage (500, 500, QImage::Format_ARGB32);
+    update();
 }
 
 QColor SpellCast::background() const
