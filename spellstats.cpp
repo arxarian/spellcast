@@ -27,6 +27,14 @@ void SpellStats::resetCompleteTime()
     m_timer_complete.start();
 }
 
+void SpellStats::resetStats()
+{
+    m_timeComplete_ms = 0;
+    m_time_ms = 0;
+    m_covered = 0;
+    m_penalty = 0;
+}
+
 void SpellStats::reset(qreal spellTempleteLength)
 {
     m_spellDrawingLength = 0;

@@ -81,6 +81,11 @@ SpellStats *SpellCast::spellStats()
     return &m_spellStats;
 }
 
+void SpellCast::resetStats()
+{
+    m_spellStats.resetStats();
+}
+
 void SpellCast::resetCompleteTime()
 {
     m_spellStats.resetCompleteTime();

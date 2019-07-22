@@ -13,6 +13,7 @@ Item {
         text.visible = false
         touchArea.enabled = true
         spellCast.resetCompleteTime()
+        spellCast.resetStats()
     }
 
     onSpellTypeChanged: {

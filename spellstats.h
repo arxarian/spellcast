@@ -21,6 +21,7 @@ public:
     qreal penalty() const;
 
     void resetCompleteTime();
+    void resetStats();
     void reset(qreal spellTempleteLength);
     void complete(qreal spellTempleteLength);
     void addSpellDrawingLength(qreal spellDrawingLength);

@@ -32,6 +32,7 @@ public:
     QString source() const;
     SpellStats* spellStats();
 
+    Q_INVOKABLE void resetStats();
     Q_INVOKABLE void resetCompleteTime();
     Q_INVOKABLE void initSpellPath(QPointF point);
     Q_INVOKABLE void updateSpellPath(QPointF point);
