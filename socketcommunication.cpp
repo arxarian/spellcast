@@ -93,6 +93,8 @@ void SocketCommunication::receiveMessage()
             else
             {
                 m_connection.m_sessionId = jObject.value(QLatin1String("sessionId")).toString();
+
+                joinSession();
             }
         }
 
@@ -142,9 +144,9 @@ void SocketCommunication::setState(QAbstractSocket::SocketState state)
     qInfo() << "state" << state;
 }
 
-void SocketCommunication::setUserName(QString userId)
+void SocketCommunication::setPlayerName(QString playerName)
 {
-    m_userId = userId;
+    m_playerName = playerName;
 }
 
 void SocketCommunication::sendSelectedSpells(QStringList spells)
@@ -171,6 +173,18 @@ void SocketCommunication::sendSpellCast(QString id, qreal accuracy, qreal penalt
     QJsonDocument json = QJsonDocument::fromVariant(map);
 
     sendMessage(json);
+}
+
+void SocketCommunication::joinSession()
+{
+    QVariantMap map;
+    map.insert("type", "joinSession");
+    map.insert("name", m_playerName);
+
+    QJsonDocument json = QJsonDocument::fromVariant(map);
+
+    sendMessage(json);
+
 }
 
 void SocketCommunication::rejoinSession()

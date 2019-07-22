@@ -40,7 +40,7 @@ Item {
             enabled: server.connected === false && server.connecting === false
             width: column.delegateWidth
             text: settings.username
-            placeholderText: qsTr("user name")
+            placeholderText: qsTr("player name")
             horizontalAlignment: TextInput.AlignHCenter
         }
 
@@ -69,7 +69,7 @@ Item {
                 settings.port = loginScreen.port
                 settings.username = loginScreen.username
 
-                server.setUserName(username)
+                server.setPlayerName(username)
                 server.connect(loginScreen.ip, loginScreen.port)
             }
         }

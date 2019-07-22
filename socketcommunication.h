@@ -27,7 +27,7 @@ public:
     Q_INVOKABLE void connect(QString address, quint16 port);
     Q_INVOKABLE void disconnect();
     Q_INVOKABLE void reconnect();
-    Q_INVOKABLE void setUserName(QString userId);
+    Q_INVOKABLE void setPlayerName(QString playerName);
 
     Q_INVOKABLE void sendMessage(QJsonDocument jsonDoc);
 
@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void sendSpellCast(QString id, qreal accuracy, qreal penalty,
                                    qint32 timeElapsedCompleted_ms, qint32 timeElapsedSpell_ms);
 
+    void joinSession();
     void rejoinSession();
     bool connected() const;
     bool connecting() const;
@@ -50,7 +51,7 @@ private:
     void setState(QAbstractSocket::SocketState state);
 
     QTcpSocket socket;
-    QString m_userId;
+    QString m_playerName;
     bool m_connected = false;
     bool m_connecting = false;
     bool m_connectionLost = false;
