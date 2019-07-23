@@ -54,8 +54,9 @@ Item {
             else if (message.type === "rectangle") {
                 spellHidingRect.color = message.color || "white"
                 spellHidingRect.visible = message.show || false
+                logs.append("rectangle visible: " + spellHidingRect.visible)
 
-                text.color = spellHidingRect.color === "white" && spellHidingRect.visible ? "black" : "white"
+                text.color = message.color === "black" && message.show ? "white" : "black"
             }
         }
     }
