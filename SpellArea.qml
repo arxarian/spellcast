@@ -53,6 +53,8 @@ Item {
             else if (message.type === "rectangle") {
                 spellHidingRect.color = message.color || "white"
                 spellHidingRect.visible = message.show || false
+
+                text.color = spellHidingRect.color === "white" && spellHidingRect.visible ? "black" : "white"
             }
         }
     }
