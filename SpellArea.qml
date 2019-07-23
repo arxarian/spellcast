@@ -11,6 +11,7 @@ Item {
 
     function resetArea() {
         text.visible = false
+        text.text = "no spell cast"
         touchArea.enabled = true
         spellCast.resetCompleteTime()
         spellCast.resetStats()
