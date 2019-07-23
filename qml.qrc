@@ -10,5 +10,6 @@
         <file>Progressbar.qml</file>
         <file>TimeoutBar.qml</file>
         <file>Logs.qml</file>
+        <file>Summary.qml</file>
     </qresource>
 </RCC>

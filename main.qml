@@ -15,7 +15,8 @@ ApplicationWindow  {
     readonly property int loginScreenIndex: 1
     readonly property int selectorScreenIndex: 2
     readonly property int castScreenIndex: 3
-    readonly property int logsScreenIndex: 4
+    readonly property int summaryScreenIndex: 4
+    readonly property int logsScreenIndex: 5
 
     property string requestedScreen
     property int requestredTabButtonIndex: 0
@@ -40,6 +41,12 @@ ApplicationWindow  {
 
         SpellArea {
             id: spellArea
+        }
+
+        Summary {
+            id: summary
+            playerName: loginScreen.username
+            onClose: screensView.currentIndex = loginScreenIndex
         }
 
         Logs {}
@@ -69,6 +76,9 @@ ApplicationWindow  {
                         else if (requestedScreen === "arena") {
                             screensView.currentIndex = castScreenIndex
                         }
+                        else if (requestedScreen === "summary") {
+                            screensView.currentIndex = summaryScreenIndex
+                        }
                     }
                     else if (index === 2) {
                         screensView.currentIndex = logsScreenIndex
@@ -90,7 +100,7 @@ ApplicationWindow  {
     Connections {
         target: server
         onConnectedChanged: {
-            if (server.connected === false) {
+            if (server.connected === false && screensView.currentIndex !== summaryScreenIndex) {
                 screensView.currentIndex = loginScreenIndex
             }
         }
@@ -106,6 +116,11 @@ ApplicationWindow  {
                      message.type === "turnEnd") {
                 screensView.currentIndex = castScreenIndex
                 requestedScreen = "arena"
+                requestredTabButtonIndex = 1
+            }
+            else if (message.type === "sessionEnd") {
+                screensView.currentIndex = summaryScreenIndex
+                requestedScreen = "summary"
                 requestredTabButtonIndex = 1
             }
         }
