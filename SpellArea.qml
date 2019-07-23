@@ -50,6 +50,10 @@ Item {
                     text.visible = true
                 }
             }
+            else if (message.type === "rectangle") {
+                spellHidingRect.color = message.color || "white"
+                spellHidingRect.visible = message.show || false
+            }
         }
     }
 
@@ -121,6 +125,13 @@ Item {
             anchors.centerIn: parent
             font.pixelSize: spellCast.size / 15
             visible: false
+        }
+
+        Rectangle {
+            id: spellHidingRect
+            anchors.fill: parent
+            visible: false
+            color: "white"
         }
 
         ParticleSystem {
