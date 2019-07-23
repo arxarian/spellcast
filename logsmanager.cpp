@@ -9,7 +9,7 @@ LogsManager::LogsManager(QObject *parent) : QObject(parent)
 
 void LogsManager::append(QString text)
 {
-    m_text.prepend(QString("%1:\n%2\n").arg(QDateTime::currentDateTime().toString()).arg(text));
+    m_text.prepend(QString("%1: %2\n").arg(QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate)).arg(text));
 
     emit textChanged();
 }

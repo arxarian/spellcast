@@ -7,17 +7,14 @@ Item {
         anchors.margins: 20
         spacing: 20
 
-        TextArea {
+        Flickable {
             height: parent.height * 14 / 15 - 20
             width: parent.width
-
-            readOnly: true
-            background: Rectangle {
-                color: "lightgray"
+            TextArea.flickable: TextArea {
+                readOnly: true
+                background: Rectangle { color: "lightgray" }
+                text: logs.text
             }
-
-            text: logs.text
-
         }
 
         Button {
