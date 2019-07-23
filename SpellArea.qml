@@ -56,7 +56,7 @@ Item {
     Column {
         id: column
         z: 1
-        spacing: 10
+        spacing: 5
         anchors {
             top: parent.top
             topMargin: parent.width * 0.05
@@ -76,7 +76,7 @@ Item {
         StatArea {
             id: statArea
 
-            height: parent.height - parent.spacing - parent.height / 15 - column.parent.width * 0.1
+            height: parent.height - parent.spacing - parent.height / 7.5 - column.parent.width * 0.1
             width: parent.width
         }
     }
@@ -88,6 +88,7 @@ Item {
         property int size: Math.min(parent.height, parent.width)
 
         anchors.centerIn: parent
+        anchors.verticalCenterOffset: parent.height / 15
 
         height: size
         width: size

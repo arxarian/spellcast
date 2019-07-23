@@ -41,8 +41,8 @@ Item {
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: parent.height * 0.1
-        anchors.bottomMargin: parent.height * 0.1
+        anchors.topMargin: parent.height * 0.05
+        anchors.bottomMargin: parent.height * 0.05
 
         ListView {
             id: statView
@@ -57,7 +57,7 @@ Item {
             anchors.fill: parent
 
             interactive: false
-            spacing: 10
+            spacing: 5
 
             model: 0
 

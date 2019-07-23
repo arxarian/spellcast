@@ -24,7 +24,7 @@ Item {
 
                 elide: Text.ElideRight
                 font.bold: true
-                font.pixelSize: parent.height / 3
+                font.pixelSize: parent.height / 2
             }
         }
 
